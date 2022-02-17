@@ -44,8 +44,8 @@ const GET_BASKET = gql`
 `;
 
 const ADD_ITEM_TO_BASKET = gql`
-  mutation addItemToCart {
-    addItemToBasket(input: { checkoutID: "XYZ", item: { productId: 4, quantity: 1 } }) {
+  mutation addItemToCart($product: AddItemToBasketInput!) {
+    addItemToBasket(input: $product) {
       basket {
         items {
           product {
@@ -103,7 +103,17 @@ function Home() {
   // ]);
 
   const handleBuy = (productId: number) => {
-    addItemToBasket();
+    addItemToBasket({
+      variables: {
+        input: {
+          checkoutID: 'XYZ',
+          item: {
+            productId,
+            quantity: 1,
+          },
+        },
+      },
+    });
   };
 
   const handleUpdate = (quantity: number, productId: string | number) => {

@@ -339,7 +339,7 @@ export type GetBasketQuery = {
 };
 
 export type AddItemToCartMutationVariables = Exact<{
-  input: AddItemToBasketInput;
+  product: AddItemToBasketInput;
 }>;
 
 export type AddItemToCartMutation = {
@@ -390,8 +390,8 @@ export const GetBasketDocument = gql`
 `;
 export type GetBasketQueryResult = Apollo.QueryResult<GetBasketQuery, GetBasketQueryVariables>;
 export const AddItemToCartDocument = gql`
-  mutation addItemToCart($input: AddItemToBasketInput!) {
-    addItemToBasket(input: $input) {
+  mutation addItemToCart($product: AddItemToBasketInput!) {
+    addItemToBasket(input: $product) {
       basket {
         items {
           product {
