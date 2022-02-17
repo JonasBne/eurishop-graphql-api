@@ -10,7 +10,8 @@
     "test:coverage": "react-scripts test --coverage --watchAll",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js --ext .jsx --ext .ts --ext .tsx .",
-    "lint:types": "tsc --noEmit"
+    "lint:types": "tsc --noEmit",
+    "gql:gen": "graphql-codegen --config codegen.yml"
   },
   "jest": {
     "collectCoverageFrom": [
