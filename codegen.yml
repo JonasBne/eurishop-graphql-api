@@ -1,0 +1,39 @@
+overwrite: true
+schema: https://euricom-test-api.herokuapp.com/graphql
+documents:
+  - ./src/**/*.tsx
+  - ./src/modules/**/*.ts
+  - ./src/graphql/fragments/**/*.ts
+  - ./src/graphql/queries/**/*.ts
+  - ./src/graphql/mutations/**/*.ts
+  - ./src/graphql/subscriptions/**/*.ts
+generates:
+  ./src/graphql/fragmentTypes.json:
+    plugins:
+      - fragment-matcher
+  ./src/graphql/types.ts:
+    plugins:
+      - add:
+          content: '/* eslint-disable */'
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      withComponent: false
+      withHOC: false
+      withHooks: false
+      scalars:
+        # TODO: type any scalars
+        Date: string
+        DateTime: string
+
+  ./src/graphql/graphql.schema.json:
+    plugins:
+      - 'introspection'
+
+  ./src/graphql/graphql.schema.graphql:
+    plugins:
+      - schema-ast
+hooks:
+  afterOneFileWrite:
+    - prettier --write
