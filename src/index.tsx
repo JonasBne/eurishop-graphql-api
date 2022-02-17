@@ -6,6 +6,8 @@ import config from './config';
 
 import App from './App';
 
+console.log(config.serverUrl);
+
 const client = new ApolloClient({
   uri: config.serverUrl,
   cache: new InMemoryCache(),

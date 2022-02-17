@@ -18,6 +18,7 @@ const GET_PRODUCTS = gql`
         title
         stocked
         image
+        desc
         price
       }
     }

@@ -318,6 +318,7 @@ export type GetAllProductsHomeQuery = {
       title?: string | null;
       stocked?: boolean | null;
       image?: string | null;
+      desc?: string | null;
       price?: number | null;
     } | null> | null;
   } | null;
@@ -331,6 +332,7 @@ export const GetAllProductsHomeDocument = gql`
         title
         stocked
         image
+        desc
         price
       }
     }
