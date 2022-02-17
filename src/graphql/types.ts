@@ -338,6 +338,24 @@ export type GetBasketQuery = {
   } | null;
 };
 
+export type AddItemToCartMutationVariables = Exact<{
+  input: AddItemToBasketInput;
+}>;
+
+export type AddItemToCartMutation = {
+  __typename?: 'Mutation';
+  addItemToBasket?: {
+    __typename?: 'AddItemToBasketPayload';
+    basket?: {
+      __typename?: 'Basket';
+      items?: Array<{
+        __typename?: 'BasketItem';
+        product?: { __typename?: 'Product'; id?: number | null; title?: string | null } | null;
+      } | null> | null;
+    } | null;
+  } | null;
+};
+
 export const GetAllProductsHomeDocument = gql`
   query getAllProductsHome {
     allProducts {
@@ -371,3 +389,23 @@ export const GetBasketDocument = gql`
   }
 `;
 export type GetBasketQueryResult = Apollo.QueryResult<GetBasketQuery, GetBasketQueryVariables>;
+export const AddItemToCartDocument = gql`
+  mutation addItemToCart($input: AddItemToBasketInput!) {
+    addItemToBasket(input: $input) {
+      basket {
+        items {
+          product {
+            id
+            title
+          }
+        }
+      }
+    }
+  }
+`;
+export type AddItemToCartMutationFn = Apollo.MutationFunction<AddItemToCartMutation, AddItemToCartMutationVariables>;
+export type AddItemToCartMutationResult = Apollo.MutationResult<AddItemToCartMutation>;
+export type AddItemToCartMutationOptions = Apollo.BaseMutationOptions<
+  AddItemToCartMutation,
+  AddItemToCartMutationVariables
+>;

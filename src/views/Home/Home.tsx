@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { gql, useQuery } from '@apollo/client';
-import { GetAllProductsHomeQuery, GetBasketQuery } from '../../graphql/types';
+import { gql, useMutation, useQuery } from '@apollo/client';
+import {
+  GetAllProductsHomeQuery,
+  GetBasketQuery,
+  AddItemToCartMutation,
+  MutationAddItemToBasketArgs,
+} from '../../graphql/types';
 import ErrorModal from '../../components/ErrorModal/ErrorModal';
 import FlexBox from '../../components/FlexBox';
 import LoadingSpinner from '../../components/LoadingSpinner';
@@ -38,6 +43,21 @@ const GET_BASKET = gql`
   }
 `;
 
+const ADD_ITEM_TO_BASKET = gql`
+  mutation addItemToCart {
+    addItemToBasket(input: { checkoutID: "XYZ", item: { productId: 4, quantity: 1 } }) {
+      basket {
+        items {
+          product {
+            id
+            title
+          }
+        }
+      }
+    }
+  }
+`;
+
 function Home() {
   // const { succesToast, failToast } = toasts();
 
@@ -50,6 +70,10 @@ function Home() {
 
   const { loading: basketIsLoading, error: basketError, data: basketData } = useQuery<GetBasketQuery>(GET_BASKET);
   const cartItems = basketData?.basket?.items ?? [];
+
+  const [addItemToBasket, { data: addedItemData }] = useMutation<AddItemToCartMutation, MutationAddItemToBasketArgs>(
+    ADD_ITEM_TO_BASKET,
+  );
   // useEffect(() => {
   //   if (postBasketError) {
   //     failToast(postBasketError);
@@ -78,8 +102,8 @@ function Home() {
   //   clearedData,
   // ]);
 
-  const handleBuy = (productId: string | number) => {
-    console.log('buy');
+  const handleBuy = (productId: number) => {
+    addItemToBasket();
   };
 
   const handleUpdate = (quantity: number, productId: string | number) => {

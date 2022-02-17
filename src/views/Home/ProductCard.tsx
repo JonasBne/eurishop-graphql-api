@@ -11,7 +11,7 @@ import { Product } from '../../graphql/types';
 // TODO: is it ok to use the type coming from codegen?
 interface ProductCardProps extends SpaceProps {
   product: Product | null;
-  onBuy: (productId: string | number) => void;
+  onBuy: (productId: number) => void;
 }
 
 function ProductCard({ product, onBuy, ...space }: ProductCardProps) {
