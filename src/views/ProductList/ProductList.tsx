@@ -1,41 +1,36 @@
 /* eslint-disable object-curly-newline */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { useGetProducts, useMutationProductRemove } from '../../api/productsApi';
 import Table from '../../components/Table/Table';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import sortBy from '../../utils/sortBy';
 import ErrorModal from '../../components/ErrorModal/ErrorModal';
 import Button from '../../components/Button';
-import toasts from '../../components/toasts';
+// import toasts from '../../components/toasts';
 
 function ProductList() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [page, setPage] = useState<number>(0);
-  const { succesToast, failToast } = toasts();
+  // const { succesToast, failToast } = toasts();
   const navigate = useNavigate();
-  const { isLoading, error, products, refetch } = useGetProducts(page);
-
-  const { mutate, error: deleteError, data: deletedData } = useMutationProductRemove();
-
   const [sortExpression, setSortExpression] = useState<string>('');
 
-  useEffect(() => {
-    if (deleteError) {
-      failToast(deleteError);
-    }
-    if (deletedData) {
-      succesToast(`Item with id: ${deletedData.id} removed!`);
-      refetch();
-    }
-  }, [deleteError, deletedData]);
+  // useEffect(() => {
+  //   if (deleteError) {
+  //     failToast(deleteError);
+  //   }
+  //   if (deletedData) {
+  //     succesToast(`Item with id: ${deletedData.id} removed!`);
+  //     refetch();
+  //   }
+  // }, [deleteError, deletedData]);
 
   const handleRedirect = (productId: string) => {
     navigate(`/products/${productId}/edit`);
   };
 
   const handleAction = (productId: string) => {
-    mutate({ productId });
+    console.log('list action with id', productId);
   };
 
   const sortedProducts = sortBy(products ?? [], sortExpression);

@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import toasts from '../../components/toasts';
-import { ProductDTO, useMutationProductPost } from '../../api/productsApi';
+// import toasts from '../../components/toasts';
 import ProductForm, { ProductFormValues } from './ProductForm';
 
 function ProductAdd() {
-  const { succesToast, failToast } = toasts();
+  // const { succesToast, failToast } = toasts();
   const navigate = useNavigate();
-  const { mutate, error: postError, data: postedProduct } = useMutationProductPost();
 
   const gridTemplateAreas = `
   "title sku"
@@ -16,28 +14,29 @@ function ProductAdd() {
   "desc desc"
   `;
 
-  useEffect(() => {
-    if (postError) {
-      failToast(postError);
-    }
-    if (postedProduct) {
-      succesToast(`New product with id ${postedProduct.id} added!`);
-      navigate('/products/admin');
-    }
-  }, [postError, postedProduct]);
+  // useEffect(() => {
+  //   if (postError) {
+  //     failToast(postError);
+  //   }
+  //   if (postedProduct) {
+  //     succesToast(`New product with id ${postedProduct.id} added!`);
+  //     navigate('/products/admin');
+  //   }
+  // }, [postError, postedProduct]);
 
   const handleCancel = () => {
     navigate('/products/admin');
   };
 
+  // TODO: fix types here
   const handleSubmit = (formValues: ProductFormValues) => {
-    const product: ProductDTO = {
+    const product: any = {
       ...formValues,
       basePrice: +formValues.basePrice,
       price: +formValues.price,
       id: 0,
     };
-    mutate(product);
+    console.log(product);
   };
 
   return (
