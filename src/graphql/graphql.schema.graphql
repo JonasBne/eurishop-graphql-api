@@ -1,0 +1,210 @@
+input AddItemToBasketInput {
+  checkoutID: ID!
+  item: BasketItemInput!
+}
+
+type AddItemToBasketPayload {
+  basket: Basket
+}
+
+type AddOrUpdateProductPayload {
+  product: Product
+}
+
+type AddOrUpdateUserPayload {
+  user: User
+}
+
+type AddTaskPayload {
+  task: Task
+}
+
+type Address {
+  city: String
+  street: String
+  zip: String
+}
+
+input AddressInput {
+  city: String
+  street: String
+  zip: String
+}
+
+type Basket {
+  checkoutID: ID
+  items: [BasketItem]
+}
+
+type BasketItem {
+  id: ID
+  product: Product
+  quantity: Int
+}
+
+input BasketItemInput {
+  productId: Int!
+  quantity: Int!
+}
+
+type ClearBasketPayload {
+  basket: Basket
+}
+
+type CompleteTaskPayload {
+  task: Task
+}
+
+"""
+Date custom scalar type
+"""
+scalar DateTime
+
+type DeleteProductPayload {
+  product: Product
+}
+
+type DeleteTaskPayload {
+  task: Task
+}
+
+type DeleteUserPayload {
+  user: User
+}
+
+type Mutation {
+  """
+  Add product to basket
+  1. If the product already exist in the basket the quantity is added
+  2. Product not found: ERROR
+  3. Product not in stock: ERROR
+  """
+  addItemToBasket(input: AddItemToBasketInput!): AddItemToBasketPayload
+
+  """
+  Create or save a product
+  """
+  addOrUpdateProduct(input: ProductInput!): AddOrUpdateProductPayload
+  addOrUpdateUser(input: UserInput!): AddOrUpdateUserPayload
+  addTask(desc: String!): AddTaskPayload
+
+  """
+  Empty the basket
+  """
+  clearBasket(checkoutID: ID): ClearBasketPayload
+  completeTask(id: Int!): CompleteTaskPayload
+
+  """
+  Remove a product
+  """
+  deleteProduct(id: Int!): DeleteProductPayload
+  deleteTask(id: Int!): DeleteTaskPayload
+  deleteUser(id: Int!): DeleteUserPayload
+
+  """
+  Remove the product from the basket
+  """
+  removeItemFromBasket(input: RemoveItemFromBasketInput!): RemoveItemFromBasketPayload
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}
+
+type Product {
+  basePrice: Float
+  desc: String
+  id: Int
+  image: String
+  price: Float
+  sku: String
+  stocked: Boolean
+  title: String
+}
+
+type ProductConnection {
+  edges: [ProductEdge]
+  pageInfo: PageInfo!
+  product: [Product]
+  totalCount: Int
+}
+
+type ProductEdge {
+  cursor: String!
+  node: Product
+}
+
+input ProductInput {
+  basePrice: Float
+  desc: String
+  id: Int
+  image: String
+  price: Float!
+  sku: String!
+  stocked: Boolean
+  title: String!
+}
+
+type Query {
+  allProducts(after: String, before: String, first: Int, last: Int, orderBy: String): ProductConnection
+  allUsers(after: String, before: String, first: Int, last: Int, orderBy: String): UserConnection
+  basket(checkoutID: String!): Basket
+  product(id: Int): Product
+  task(id: Int): Task
+  tasks: [Task]
+  user(id: Int): User
+}
+
+input RemoveItemFromBasketInput {
+  checkoutID: ID!
+  productId: Int!
+}
+
+type RemoveItemFromBasketPayload {
+  basket: Basket
+}
+
+type Task {
+  completed: Boolean
+  desc: String
+  id: Int
+}
+
+type User {
+  address: Address
+  age: Int
+  company: String
+  email: String
+  firstName: String
+  id: Int
+  image: String
+  lastName: String
+  phone: String
+}
+
+type UserConnection {
+  edges: [UserEdge]
+  pageInfo: PageInfo!
+  totalCount: Int
+  user: [User]
+}
+
+type UserEdge {
+  cursor: String!
+  node: User
+}
+
+input UserInput {
+  address: AddressInput
+  age: Int
+  company: String
+  email: String!
+  firstName: String!
+  id: Int
+  image: String
+  lastName: String!
+  phone: String
+}
