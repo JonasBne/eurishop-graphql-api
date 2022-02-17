@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/aria-role */
 import React, { useState, useEffect } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { GetAllProductsHomeQuery } from '../../graphql/types';
@@ -8,7 +7,6 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import ProductCard from './ProductCard';
 // import ShoppingCart from '../ShoppingCart/ShoppingCart';
 import toasts from '../../components/toasts';
-import Button from '../../components/Button';
 
 const GET_PRODUCTS = gql`
   query getAllProductsHome {

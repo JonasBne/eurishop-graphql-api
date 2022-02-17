@@ -6,28 +6,28 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import Card from '../../components/Card';
 import Button from '../../components/Button';
 import FaIcon from '../../assets/FaIcon';
-import Product from '../../domain/product';
+import { Product } from '../../graphql/types';
 
 interface ProductCardProps extends SpaceProps {
-  product: Product;
+  product: Product | null;
   onBuy: (productId: string | number) => void;
 }
 
 function ProductCard({ product, onBuy, ...space }: ProductCardProps) {
   const handleBuy = (event: React.MouseEvent) => {
     event.preventDefault();
-    onBuy(product.id!);
+    onBuy(product?.id!);
   };
 
   return (
     <Card
-      title={product.title}
-      image={product.image}
-      content={product.desc}
-      footerContent={`Unit price: € ${product.price}`}
+      title={product?.title}
+      image={product?.image}
+      content={product?.desc}
+      footerContent={`Unit price: € ${product?.price}`}
       {...space}
     >
-      {product.stocked ? (
+      {product?.stocked ? (
         <Button type="button" variant="primary" my="1rem" mx="6rem" px="1rem" onClick={handleBuy}>
           ADD
           <FaIcon icon={faShoppingCart} mx=".25rem" />

@@ -1,4 +1,3 @@
-/* eslint-disable object-curly-newline */
 /* eslint-disable jsx-a11y/aria-role */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { ReactNode, useContext } from 'react';
@@ -31,9 +30,9 @@ const CardFooter = styled.p`
 `;
 
 export interface CardProps extends Omit<SpaceProps, 'p' | 'pl' | 'pr' | 'px' | 'py'> {
-  title: string;
-  image: string;
-  content: string;
+  title?: string | null;
+  image?: string | null;
+  content?: string | null;
   footerContent?: string | number;
   children?: ReactNode;
 }
@@ -53,7 +52,7 @@ function Card({ title, image, content, footerContent, children, ...space }: Card
       <Header as="h3" variant="secondary">
         {title}
       </Header>
-      <CardMedia src={image} />
+      <CardMedia src={image || ''} />
       <CardContent>{content}</CardContent>
       <CardFooter>{footerContent}</CardFooter>
 
