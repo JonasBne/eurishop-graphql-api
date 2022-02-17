@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { gql, useQuery } from '@apollo/client';
-import { GetAllProductsHomeQuery } from '../../graphql/types';
+import { GetAllProductsHomeQuery, GetBasketQuery } from '../../graphql/types';
 import ErrorModal from '../../components/ErrorModal/ErrorModal';
 import FlexBox from '../../components/FlexBox';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import ProductCard from './ProductCard';
-// import ShoppingCart from '../ShoppingCart/ShoppingCart';
+import ShoppingCart from '../ShoppingCart/ShoppingCart';
 import toasts from '../../components/toasts';
 
 const GET_PRODUCTS = gql`
@@ -23,12 +23,33 @@ const GET_PRODUCTS = gql`
   }
 `;
 
+const GET_BASKET = gql`
+  query getBasket {
+    basket(checkoutID: "XYZ") {
+      items {
+        product {
+          id
+          title
+          price
+        }
+        quantity
+      }
+    }
+  }
+`;
+
 function Home() {
   // const { succesToast, failToast } = toasts();
 
-  const { loading, error, data } = useQuery<GetAllProductsHomeQuery>(GET_PRODUCTS);
-  const products = data?.allProducts?.product ?? [];
+  const {
+    loading: productsIsLoading,
+    error: productsError,
+    data: productsData,
+  } = useQuery<GetAllProductsHomeQuery>(GET_PRODUCTS);
+  const products = productsData?.allProducts?.product ?? [];
 
+  const { loading: basketIsLoading, error: basketError, data: basketData } = useQuery<GetBasketQuery>(GET_BASKET);
+  const cartItems = basketData?.basket?.items ?? [];
   // useEffect(() => {
   //   if (postBasketError) {
   //     failToast(postBasketError);
@@ -71,21 +92,25 @@ function Home() {
 
   return (
     <>
-      {loading && !error && <LoadingSpinner />}
-      {!loading && error && <ErrorModal name={error.name} message={error.message} />}
+      {productsIsLoading || (basketIsLoading && !productsError && !basketError && <LoadingSpinner />)}
+      {(!productsIsLoading && !basketIsLoading && productsError) ||
+        (basketError && (
+          <ErrorModal
+            name={productsError?.name || basketError?.name}
+            message={productsError?.message || basketError?.message}
+          />
+        ))}
       {products && (
-        <>
-          <FlexBox>
-            <FlexBox flexWrap="wrap" justifyContent="start" flexDirection="row" order={1} flexBasis="75%">
-              {products.map((product) => (
-                <ProductCard key={product?.id} product={product} onBuy={handleBuy} m="4rem 3rem" />
-              ))}
-            </FlexBox>
-            {/* <FlexBox order={2} flexBasis="25%" mt="2rem" height="fit-content">
-              <ShoppingCart cartItems={cartItems} onUpdate={handleUpdate} onClear={handleClear} />
-            </FlexBox> */}
+        <FlexBox>
+          <FlexBox flexWrap="wrap" justifyContent="start" flexDirection="row" order={1} flexBasis="75%">
+            {products.map((product) => (
+              <ProductCard key={product?.id} product={product} onBuy={handleBuy} m="4rem 3rem" />
+            ))}
           </FlexBox>
-        </>
+          <FlexBox order={2} flexBasis="25%" mt="2rem" height="fit-content">
+            <ShoppingCart cartItems={cartItems} onUpdate={handleUpdate} onClear={handleClear} />
+          </FlexBox>
+        </FlexBox>
       )}
     </>
   );

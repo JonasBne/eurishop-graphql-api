@@ -324,6 +324,20 @@ export type GetAllProductsHomeQuery = {
   } | null;
 };
 
+export type GetBasketQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetBasketQuery = {
+  __typename?: 'Query';
+  basket?: {
+    __typename?: 'Basket';
+    items?: Array<{
+      __typename?: 'BasketItem';
+      quantity?: number | null;
+      product?: { __typename?: 'Product'; id?: number | null; title?: string | null; price?: number | null } | null;
+    } | null> | null;
+  } | null;
+};
+
 export const GetAllProductsHomeDocument = gql`
   query getAllProductsHome {
     allProducts {
@@ -342,3 +356,18 @@ export type GetAllProductsHomeQueryResult = Apollo.QueryResult<
   GetAllProductsHomeQuery,
   GetAllProductsHomeQueryVariables
 >;
+export const GetBasketDocument = gql`
+  query getBasket {
+    basket(checkoutID: "XYZ") {
+      items {
+        product {
+          id
+          title
+          price
+        }
+        quantity
+      }
+    }
+  }
+`;
+export type GetBasketQueryResult = Apollo.QueryResult<GetBasketQuery, GetBasketQueryVariables>;
