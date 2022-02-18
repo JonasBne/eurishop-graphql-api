@@ -1,3 +1,5 @@
+// TODO: remove this rule
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import LoadingSpinner from '../../components/LoadingSpinner';
@@ -43,9 +45,11 @@ function ProductEdit() {
     console.log(item);
   };
 
+  // TODO: uncomment
   return (
     <>
-      {isLoading && <LoadingSpinner />}
+      product edit here
+      {/* {isLoading && <LoadingSpinner />}
       {error && <ErrorModal name={error.name} message={error.message} />}
       {product && (
         <ProductForm
@@ -57,7 +61,7 @@ function ProductEdit() {
           mt="2rem"
           mx="auto"
         />
-      )}
+      )} */}
     </>
   );
 }
