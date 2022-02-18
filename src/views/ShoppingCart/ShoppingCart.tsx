@@ -7,11 +7,12 @@ import FlexBox from '../../components/FlexBox';
 import Header from '../../components/Header';
 import Button from '../../components/Button';
 import BasketItem from './BasketItem';
-import { CartItem, calculateTotalCartCost } from '../../domain/shoppingCart';
+import { calculateTotalCartCost } from '../../domain/shoppingCart';
 import FaIcon from '../../assets/FaIcon';
 
+// TODO: replace any[] with proper type
 interface ShoppingCartProps {
-  cartItems: CartItem[];
+  cartItems: any[];
   onUpdate: (quantity: number, productId: string | number) => void;
   onClear: () => void;
 }
