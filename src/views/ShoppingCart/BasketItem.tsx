@@ -2,11 +2,12 @@ import React from 'react';
 import Header from '../../components/Header';
 import Button from '../../components/Button';
 import Box from '../../components/Box';
-import { CartItem, calculateTotalCostPerCartItem } from '../../domain/shoppingCart';
+import { calculateTotalCostPerCartItem } from '../../domain/shoppingCart';
 import FlexBox from '../../components/FlexBox';
 
+// TODO: add typing to item
 interface BasketItemProps {
-  item: CartItem;
+  item: any;
   onUpdate: (quantity: number, productId: string | number) => void;
 }
 
