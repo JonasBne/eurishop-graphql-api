@@ -11,7 +11,6 @@ import TextArea from '../../components/TextArea';
 import Header from '../../components/Header';
 import Button from '../../components/Button';
 import FlexBox from '../../components/FlexBox';
-import Product from '../../domain/product';
 
 const StyledForm = styled.form<SpaceProps | LayoutProps>`
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
@@ -22,9 +21,10 @@ const StyledForm = styled.form<SpaceProps | LayoutProps>`
   ${layout};
 `;
 
+// TODO: fix any type on initialProduct to type from graphQl codegen
 interface ProductFormProps extends SpaceProps {
   title: string;
-  initialProduct?: Product;
+  initialProduct?: any;
   gridTemplateAreas: string;
   onCancel?: () => void;
   onSubmit?: (formValues: ProductFormValues) => void;

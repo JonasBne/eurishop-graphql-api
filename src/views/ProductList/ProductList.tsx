@@ -2,9 +2,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import Table from '../../components/Table/Table';
-import LoadingSpinner from '../../components/LoadingSpinner';
+// import LoadingSpinner from '../../components/LoadingSpinner';
 import sortBy from '../../utils/sortBy';
-import ErrorModal from '../../components/ErrorModal/ErrorModal';
+// import ErrorModal from '../../components/ErrorModal/ErrorModal';
 import Button from '../../components/Button';
 // import toasts from '../../components/toasts';
 
@@ -14,6 +14,9 @@ function ProductList() {
   // const { succesToast, failToast } = toasts();
   const navigate = useNavigate();
   const [sortExpression, setSortExpression] = useState<string>('');
+
+  // TODO: remove this and replace with query
+  const products: any[] = [];
 
   // useEffect(() => {
   //   if (deleteError) {
@@ -100,10 +103,11 @@ function ProductList() {
     setPage((prePage) => prePage + 1);
   };
 
+  // TODO: uncomment this
   return (
     <>
-      {isLoading && !error && <LoadingSpinner />}
-      {error && <ErrorModal name={error.name} message={error.message} />}
+      {/* {isLoading && !error && <LoadingSpinner />}
+      {error && <ErrorModal name={error.name} message={error.message} />} */}
       {products && (
         <>
           <Button m="2rem 0 0 2rem" p="0.5rem 2rem" variant="primary" onClick={handleAddProductClick}>
