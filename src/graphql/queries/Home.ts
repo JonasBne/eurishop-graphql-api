@@ -44,3 +44,13 @@ export const ADD_ITEM_TO_BASKET = gql`
     }
   }
 `;
+
+export const CLEAR_BASKET = gql`
+  mutation CLEAR_BASKET {
+    clearBasket(checkoutID: "XYZ") {
+      basket {
+        checkoutID
+      }
+    }
+  }
+`;

@@ -5,8 +5,9 @@ import {
   GetBasketQuery,
   AddItemToBasketMutation,
   AddItemToBasketMutationVariables,
+  Clear_BasketMutation,
 } from '../../graphql/types';
-import { GET_PRODUCTS, GET_BASKET, ADD_ITEM_TO_BASKET } from './queries';
+import { GET_PRODUCTS, GET_BASKET, ADD_ITEM_TO_BASKET, CLEAR_BASKET } from '../../graphql/queries/Home';
 import ErrorModal from '../../components/ErrorModal/ErrorModal';
 import FlexBox from '../../components/FlexBox';
 import LoadingSpinner from '../../components/LoadingSpinner';
@@ -38,14 +39,25 @@ function Home() {
     ],
   });
 
+  const [clearBasket, { error: clearBasketError }] = useMutation<Clear_BasketMutation>(CLEAR_BASKET, {
+    refetchQueries: [
+      {
+        query: GET_BASKET,
+      },
+    ],
+  });
+
   useEffect(() => {
     if (addedItemError) {
       failToast(addedItemError.message);
     }
+    if (clearBasketError) {
+      failToast(clearBasketError.message);
+    }
     if (addedItemData?.addItemToBasket?.basket) {
       succesToast('Success!');
     }
-  }, [addedItemError, addedItemData]);
+  }, [addedItemError, clearBasketError, addedItemData]);
 
   const handleBuy = (productId: number) => {
     addItemToBasket({
@@ -61,12 +73,8 @@ function Home() {
     });
   };
 
-  // const handleUpdate = (quantity: number, productId: string | number) => {
-  //   console.log('update');
-  // };
-
   const handleClear = () => {
-    console.log('clear');
+    clearBasket();
   };
 
   return (

@@ -356,6 +356,16 @@ export type AddItemToBasketMutation = {
   } | null;
 };
 
+export type Clear_BasketMutationVariables = Exact<{ [key: string]: never }>;
+
+export type Clear_BasketMutation = {
+  __typename?: 'Mutation';
+  clearBasket?: {
+    __typename?: 'ClearBasketPayload';
+    basket?: { __typename?: 'Basket'; checkoutID?: string | null } | null;
+  } | null;
+};
+
 export const GetAllProductsHomeDocument = gql`
   query getAllProductsHome {
     allProducts {
@@ -411,4 +421,19 @@ export type AddItemToBasketMutationResult = Apollo.MutationResult<AddItemToBaske
 export type AddItemToBasketMutationOptions = Apollo.BaseMutationOptions<
   AddItemToBasketMutation,
   AddItemToBasketMutationVariables
+>;
+export const Clear_BasketDocument = gql`
+  mutation CLEAR_BASKET {
+    clearBasket(checkoutID: "XYZ") {
+      basket {
+        checkoutID
+      }
+    }
+  }
+`;
+export type Clear_BasketMutationFn = Apollo.MutationFunction<Clear_BasketMutation, Clear_BasketMutationVariables>;
+export type Clear_BasketMutationResult = Apollo.MutationResult<Clear_BasketMutation>;
+export type Clear_BasketMutationOptions = Apollo.BaseMutationOptions<
+  Clear_BasketMutation,
+  Clear_BasketMutationVariables
 >;
