@@ -1,6 +1,5 @@
 import React from 'react';
 import Header from '../../components/Header';
-import Button from '../../components/Button';
 import Box from '../../components/Box';
 import { calculateTotalCostPerCartItem } from '../../domain/shoppingCart';
 import FlexBox from '../../components/FlexBox';
@@ -8,23 +7,9 @@ import FlexBox from '../../components/FlexBox';
 // TODO: add typing to item
 interface BasketItemProps {
   item: any;
-  onUpdate: (quantity: number, productId: string | number) => void;
 }
 
-function BasketItem({ item, onUpdate }: BasketItemProps) {
-  const handleUpdate = (action: string) => {
-    let { quantity } = item;
-    const productId = item.product.id!;
-
-    if (action === 'decrement') {
-      quantity -= 1;
-    }
-    if (action === 'increment') {
-      quantity += 1;
-    }
-    onUpdate(quantity, productId);
-  };
-
+function BasketItem({ item }: BasketItemProps) {
   return (
     // eslint-disable-next-line jsx-a11y/aria-role
     <div role="cart-item">
@@ -33,13 +18,7 @@ function BasketItem({ item, onUpdate }: BasketItemProps) {
       </Header>
       <Box my="0.5rem" fontStyle="italic">{`Unit price: € ${item.product.price}`}</Box>
       <FlexBox alignItems="baseline" my="2rem">
-        <Button type="button" variant="secondary" mr="1rem" onClick={() => handleUpdate('decrement')}>
-          -
-        </Button>
-        <div>{item.quantity}</div>
-        <Button type="button" variant="secondary" ml="1rem" onClick={() => handleUpdate('increment')}>
-          +
-        </Button>
+        <div>Quantity: {item.quantity}</div>
       </FlexBox>
       <Box mt="0.5rem" mb="1rem" fontWeight="bold">
         {`Total: € ${calculateTotalCostPerCartItem(item)}`}

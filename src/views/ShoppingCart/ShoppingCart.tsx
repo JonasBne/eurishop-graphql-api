@@ -13,11 +13,10 @@ import FaIcon from '../../assets/FaIcon';
 // TODO: replace any[] with proper type
 interface ShoppingCartProps {
   cartItems: any[];
-  onUpdate: (quantity: number, productId: string | number) => void;
   onClear: () => void;
 }
 
-function ShoppingCart({ cartItems, onUpdate, onClear }: ShoppingCartProps) {
+function ShoppingCart({ cartItems, onClear }: ShoppingCartProps) {
   const theme = useContext(ThemeContext);
 
   const handleClear = () => {
@@ -41,7 +40,7 @@ function ShoppingCart({ cartItems, onUpdate, onClear }: ShoppingCartProps) {
         {cartItems.length > 0 ? (
           cartItems.map((item) => (
             <Box pl="1rem" key={item.product.id}>
-              <BasketItem item={item} onUpdate={onUpdate} data-test-id={item.product.id} />
+              <BasketItem item={item} data-test-id={item.product.id} />
               <hr />
             </Box>
           ))
