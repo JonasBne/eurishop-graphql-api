@@ -8,7 +8,7 @@ import ErrorModal from '../../components/ErrorModal/ErrorModal';
 import Button from '../../components/Button';
 import { GET_PRODUCTS } from '../../graphql/queries/ProductList';
 import { GetAllProductsListQuery, Remove_ProductMutation, Remove_ProductMutationVariables } from '../../graphql/types';
-import REMOVE_PRODUCT from '../../graphql/queries';
+import { REMOVE_PRODUCT } from '../../graphql/queries';
 import toasts from '../../components/toasts';
 
 function ProductList() {

@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-const REMOVE_PRODUCT = gql`
+export const REMOVE_PRODUCT = gql`
   mutation REMOVE_PRODUCT($id: Int!) {
     deleteProduct(id: $id) {
       product {
@@ -10,4 +10,12 @@ const REMOVE_PRODUCT = gql`
   }
 `;
 
-export default REMOVE_PRODUCT;
+export const UPDATE_PRODUCT = gql`
+  mutation addOrUpdateProduct($product: ProductInput!) {
+    addOrUpdateProduct(input: $product) {
+      product {
+        id
+      }
+    }
+  }
+`;
