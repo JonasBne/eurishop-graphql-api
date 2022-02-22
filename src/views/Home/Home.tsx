@@ -74,7 +74,14 @@ function Home() {
   const [addItemToBasket, { error: addedItemError, data: addedItemData }] = useMutation<
     AddItemToBasketMutation,
     AddItemToBasketMutationVariables
-  >(ADD_ITEM_TO_BASKET);
+  >(ADD_ITEM_TO_BASKET, {
+    refetchQueries: [
+      {
+        query: GET_BASKET,
+      },
+    ],
+  });
+
   useEffect(() => {
     if (addedItemError) {
       failToast(addedItemError.message);
