@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import {
   GetAllProductsHomeQuery,
@@ -59,7 +59,7 @@ const ADD_ITEM_TO_BASKET = gql`
 `;
 
 function Home() {
-  // const { succesToast, failToast } = toasts();
+  const { succesToast, failToast } = toasts();
 
   const {
     loading: productsIsLoading,
@@ -71,37 +71,18 @@ function Home() {
   const { loading: basketIsLoading, error: basketError, data: basketData } = useQuery<GetBasketQuery>(GET_BASKET);
   const cartItems = basketData?.basket?.items ?? [];
 
-  const [addItemToBasket, { data: addedItemData }] = useMutation<
+  const [addItemToBasket, { error: addedItemError, data: addedItemData }] = useMutation<
     AddItemToBasketMutation,
     AddItemToBasketMutationVariables
   >(ADD_ITEM_TO_BASKET);
-  // useEffect(() => {
-  //   if (postBasketError) {
-  //     failToast(postBasketError);
-  //   }
-  //   if (patchBasketError) {
-  //     failToast(patchBasketError);
-  //   }
-  //   if (removeItemError) {
-  //     failToast(removeItemError);
-  //   }
-  //   if (clearBasketError) {
-  //     failToast(clearBasketError);
-  //   }
-  //   if (postedData || patchedData || removedData || clearedData) {
-  //     succesToast('Success!');
-  //     cartRefetch();
-  //   }
-  // }, [
-  //   postBasketError,
-  //   patchBasketError,
-  //   removeItemError,
-  //   clearBasketError,
-  //   postedData,
-  //   patchedData,
-  //   removedData,
-  //   clearedData,
-  // ]);
+  useEffect(() => {
+    if (addedItemError) {
+      failToast(addedItemError.message);
+    }
+    if (addedItemData?.addItemToBasket?.basket) {
+      succesToast('Success!');
+    }
+  }, [addedItemError, addedItemData]);
 
   const handleBuy = (productId: number) => {
     addItemToBasket({
@@ -117,9 +98,9 @@ function Home() {
     });
   };
 
-  const handleUpdate = (quantity: number, productId: string | number) => {
-    console.log('update');
-  };
+  // const handleUpdate = (quantity: number, productId: string | number) => {
+  //   console.log('update');
+  // };
 
   const handleClear = () => {
     console.log('clear');
@@ -143,7 +124,7 @@ function Home() {
             ))}
           </FlexBox>
           <FlexBox order={2} flexBasis="25%" mt="2rem" height="fit-content">
-            <ShoppingCart cartItems={cartItems} onUpdate={handleUpdate} onClear={handleClear} />
+            <ShoppingCart cartItems={cartItems} onClear={handleClear} />
           </FlexBox>
         </FlexBox>
       )}
