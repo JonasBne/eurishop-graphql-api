@@ -1,11 +1,13 @@
-/* eslint-disable object-curly-newline */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { useQuery } from '@apollo/client';
 import Table from '../../components/Table/Table';
-// import LoadingSpinner from '../../components/LoadingSpinner';
+import LoadingSpinner from '../../components/LoadingSpinner';
 import sortBy from '../../utils/sortBy';
-// import ErrorModal from '../../components/ErrorModal/ErrorModal';
+import ErrorModal from '../../components/ErrorModal/ErrorModal';
 import Button from '../../components/Button';
+import { GET_PRODUCTS } from '../../graphql/queries/ProductList';
+import { GetAllProductsListQuery } from '../../graphql/types';
 // import toasts from '../../components/toasts';
 
 function ProductList() {
@@ -15,8 +17,12 @@ function ProductList() {
   const navigate = useNavigate();
   const [sortExpression, setSortExpression] = useState<string>('');
 
-  // TODO: remove this and replace with query
-  const products: any[] = [];
+  const {
+    loading: productsIsLoading,
+    error: productsError,
+    data: productsData,
+  } = useQuery<GetAllProductsListQuery>(GET_PRODUCTS);
+  const products = productsData?.allProducts?.product ?? [];
 
   // useEffect(() => {
   //   if (deleteError) {
@@ -39,6 +45,12 @@ function ProductList() {
   const sortedProducts = sortBy(products ?? [], sortExpression);
 
   const columns = [
+    {
+      name: '__typename',
+      label: 'Type',
+      sortable: false,
+      id: 'col0',
+    },
     {
       name: 'id',
       label: 'Product ID',
@@ -103,11 +115,10 @@ function ProductList() {
     setPage((prePage) => prePage + 1);
   };
 
-  // TODO: uncomment this
   return (
     <>
-      {/* {isLoading && !error && <LoadingSpinner />}
-      {error && <ErrorModal name={error.name} message={error.message} />} */}
+      {productsIsLoading && !productsError && <LoadingSpinner />}
+      {productsError && <ErrorModal name={productsError.name} message={productsError.message} />}
       {products && (
         <>
           <Button m="2rem 0 0 2rem" p="0.5rem 2rem" variant="primary" onClick={handleAddProductClick}>

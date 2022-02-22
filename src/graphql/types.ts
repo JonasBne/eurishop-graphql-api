@@ -366,6 +366,26 @@ export type Clear_BasketMutation = {
   } | null;
 };
 
+export type GetAllProductsListQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllProductsListQuery = {
+  __typename?: 'Query';
+  allProducts?: {
+    __typename?: 'ProductConnection';
+    product?: Array<{
+      __typename?: 'Product';
+      id?: number | null;
+      sku?: string | null;
+      title?: string | null;
+      desc?: string | null;
+      image?: string | null;
+      stocked?: boolean | null;
+      basePrice?: number | null;
+      price?: number | null;
+    } | null> | null;
+  } | null;
+};
+
 export const GetAllProductsHomeDocument = gql`
   query getAllProductsHome {
     allProducts {
@@ -436,4 +456,24 @@ export type Clear_BasketMutationResult = Apollo.MutationResult<Clear_BasketMutat
 export type Clear_BasketMutationOptions = Apollo.BaseMutationOptions<
   Clear_BasketMutation,
   Clear_BasketMutationVariables
+>;
+export const GetAllProductsListDocument = gql`
+  query getAllProductsList {
+    allProducts {
+      product {
+        id
+        sku
+        title
+        desc
+        image
+        stocked
+        basePrice
+        price
+      }
+    }
+  }
+`;
+export type GetAllProductsListQueryResult = Apollo.QueryResult<
+  GetAllProductsListQuery,
+  GetAllProductsListQueryVariables
 >;
