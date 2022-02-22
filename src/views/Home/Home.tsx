@@ -1,62 +1,18 @@
 import React, { useEffect } from 'react';
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   GetAllProductsHomeQuery,
   GetBasketQuery,
   AddItemToBasketMutation,
   AddItemToBasketMutationVariables,
 } from '../../graphql/types';
+import { GET_PRODUCTS, GET_BASKET, ADD_ITEM_TO_BASKET } from './queries';
 import ErrorModal from '../../components/ErrorModal/ErrorModal';
 import FlexBox from '../../components/FlexBox';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import ProductCard from './ProductCard';
 import ShoppingCart from '../ShoppingCart/ShoppingCart';
 import toasts from '../../components/toasts';
-
-const GET_PRODUCTS = gql`
-  query getAllProductsHome {
-    allProducts {
-      product {
-        id
-        title
-        stocked
-        image
-        desc
-        price
-      }
-    }
-  }
-`;
-
-const GET_BASKET = gql`
-  query getBasket {
-    basket(checkoutID: "XYZ") {
-      items {
-        product {
-          id
-          title
-          price
-        }
-        quantity
-      }
-    }
-  }
-`;
-
-const ADD_ITEM_TO_BASKET = gql`
-  mutation addItemToBasket($product: AddItemToBasketInput!) {
-    addItemToBasket(input: $product) {
-      basket {
-        items {
-          product {
-            id
-            title
-          }
-        }
-      }
-    }
-  }
-`;
 
 function Home() {
   const { succesToast, failToast } = toasts();
