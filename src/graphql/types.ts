@@ -338,11 +338,11 @@ export type GetBasketQuery = {
   } | null;
 };
 
-export type AddItemToCartMutationVariables = Exact<{
+export type AddItemToBasketMutationVariables = Exact<{
   product: AddItemToBasketInput;
 }>;
 
-export type AddItemToCartMutation = {
+export type AddItemToBasketMutation = {
   __typename?: 'Mutation';
   addItemToBasket?: {
     __typename?: 'AddItemToBasketPayload';
@@ -389,8 +389,8 @@ export const GetBasketDocument = gql`
   }
 `;
 export type GetBasketQueryResult = Apollo.QueryResult<GetBasketQuery, GetBasketQueryVariables>;
-export const AddItemToCartDocument = gql`
-  mutation addItemToCart($product: AddItemToBasketInput!) {
+export const AddItemToBasketDocument = gql`
+  mutation addItemToBasket($product: AddItemToBasketInput!) {
     addItemToBasket(input: $product) {
       basket {
         items {
@@ -403,9 +403,12 @@ export const AddItemToCartDocument = gql`
     }
   }
 `;
-export type AddItemToCartMutationFn = Apollo.MutationFunction<AddItemToCartMutation, AddItemToCartMutationVariables>;
-export type AddItemToCartMutationResult = Apollo.MutationResult<AddItemToCartMutation>;
-export type AddItemToCartMutationOptions = Apollo.BaseMutationOptions<
-  AddItemToCartMutation,
-  AddItemToCartMutationVariables
+export type AddItemToBasketMutationFn = Apollo.MutationFunction<
+  AddItemToBasketMutation,
+  AddItemToBasketMutationVariables
+>;
+export type AddItemToBasketMutationResult = Apollo.MutationResult<AddItemToBasketMutation>;
+export type AddItemToBasketMutationOptions = Apollo.BaseMutationOptions<
+  AddItemToBasketMutation,
+  AddItemToBasketMutationVariables
 >;

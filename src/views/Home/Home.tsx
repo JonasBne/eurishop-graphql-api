@@ -3,8 +3,8 @@ import { gql, useMutation, useQuery } from '@apollo/client';
 import {
   GetAllProductsHomeQuery,
   GetBasketQuery,
-  AddItemToCartMutation,
-  MutationAddItemToBasketArgs,
+  AddItemToBasketMutation,
+  AddItemToBasketMutationVariables,
 } from '../../graphql/types';
 import ErrorModal from '../../components/ErrorModal/ErrorModal';
 import FlexBox from '../../components/FlexBox';
@@ -44,7 +44,7 @@ const GET_BASKET = gql`
 `;
 
 const ADD_ITEM_TO_BASKET = gql`
-  mutation addItemToCart($product: AddItemToBasketInput!) {
+  mutation addItemToBasket($product: AddItemToBasketInput!) {
     addItemToBasket(input: $product) {
       basket {
         items {
@@ -71,9 +71,10 @@ function Home() {
   const { loading: basketIsLoading, error: basketError, data: basketData } = useQuery<GetBasketQuery>(GET_BASKET);
   const cartItems = basketData?.basket?.items ?? [];
 
-  const [addItemToBasket, { data: addedItemData }] = useMutation<AddItemToCartMutation, MutationAddItemToBasketArgs>(
-    ADD_ITEM_TO_BASKET,
-  );
+  const [addItemToBasket, { data: addedItemData }] = useMutation<
+    AddItemToBasketMutation,
+    AddItemToBasketMutationVariables
+  >(ADD_ITEM_TO_BASKET);
   // useEffect(() => {
   //   if (postBasketError) {
   //     failToast(postBasketError);
@@ -105,7 +106,7 @@ function Home() {
   const handleBuy = (productId: number) => {
     addItemToBasket({
       variables: {
-        input: {
+        product: {
           checkoutID: 'XYZ',
           item: {
             productId,
