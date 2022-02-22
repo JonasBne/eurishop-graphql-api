@@ -386,6 +386,18 @@ export type GetAllProductsListQuery = {
   } | null;
 };
 
+export type Remove_ProductMutationVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+export type Remove_ProductMutation = {
+  __typename?: 'Mutation';
+  deleteProduct?: {
+    __typename?: 'DeleteProductPayload';
+    product?: { __typename?: 'Product'; id?: number | null } | null;
+  } | null;
+};
+
 export const GetAllProductsHomeDocument = gql`
   query getAllProductsHome {
     allProducts {
@@ -476,4 +488,19 @@ export const GetAllProductsListDocument = gql`
 export type GetAllProductsListQueryResult = Apollo.QueryResult<
   GetAllProductsListQuery,
   GetAllProductsListQueryVariables
+>;
+export const Remove_ProductDocument = gql`
+  mutation REMOVE_PRODUCT($id: Int!) {
+    deleteProduct(id: $id) {
+      product {
+        id
+      }
+    }
+  }
+`;
+export type Remove_ProductMutationFn = Apollo.MutationFunction<Remove_ProductMutation, Remove_ProductMutationVariables>;
+export type Remove_ProductMutationResult = Apollo.MutationResult<Remove_ProductMutation>;
+export type Remove_ProductMutationOptions = Apollo.BaseMutationOptions<
+  Remove_ProductMutation,
+  Remove_ProductMutationVariables
 >;

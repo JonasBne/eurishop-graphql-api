@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import Table from '../../components/Table/Table';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import sortBy from '../../utils/sortBy';
 import ErrorModal from '../../components/ErrorModal/ErrorModal';
 import Button from '../../components/Button';
 import { GET_PRODUCTS } from '../../graphql/queries/ProductList';
-import { GetAllProductsListQuery } from '../../graphql/types';
-// import toasts from '../../components/toasts';
+import { GetAllProductsListQuery, Remove_ProductMutation, Remove_ProductMutationVariables } from '../../graphql/types';
+import REMOVE_PRODUCT from '../../graphql/queries';
+import toasts from '../../components/toasts';
 
 function ProductList() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [page, setPage] = useState<number>(0);
-  // const { succesToast, failToast } = toasts();
+  const { succesToast, failToast } = toasts();
   const navigate = useNavigate();
   const [sortExpression, setSortExpression] = useState<string>('');
 
@@ -24,22 +23,36 @@ function ProductList() {
   } = useQuery<GetAllProductsListQuery>(GET_PRODUCTS);
   const products = productsData?.allProducts?.product ?? [];
 
-  // useEffect(() => {
-  //   if (deleteError) {
-  //     failToast(deleteError);
-  //   }
-  //   if (deletedData) {
-  //     succesToast(`Item with id: ${deletedData.id} removed!`);
-  //     refetch();
-  //   }
-  // }, [deleteError, deletedData]);
+  const [removeProduct, { error: removeError, data: removedData }] = useMutation<
+    Remove_ProductMutation,
+    Remove_ProductMutationVariables
+  >(REMOVE_PRODUCT, {
+    refetchQueries: [
+      {
+        query: GET_PRODUCTS,
+      },
+    ],
+  });
+
+  useEffect(() => {
+    if (removeError) {
+      failToast(removeError.message);
+    }
+    if (removedData) {
+      succesToast(`Item with id: ${removedData.deleteProduct?.product?.id} removed!`);
+    }
+  }, [removeError, removedData]);
 
   const handleRedirect = (productId: string) => {
     navigate(`/products/${productId}/edit`);
   };
 
-  const handleAction = (productId: string) => {
-    console.log('list action with id', productId);
+  const handleAction = (productId: number) => {
+    removeProduct({
+      variables: {
+        id: productId,
+      },
+    });
   };
 
   const sortedProducts = sortBy(products ?? [], sortExpression);
@@ -111,10 +124,6 @@ function ProductList() {
     navigate('/products/new');
   };
 
-  const handleLoadMoreData = () => {
-    setPage((prePage) => prePage + 1);
-  };
-
   return (
     <>
       {productsIsLoading && !productsError && <LoadingSpinner />}
@@ -131,7 +140,6 @@ function ProductList() {
             setSortExpression={setSortExpression}
             onRowClick={handleRedirect}
             onActionClick={handleAction}
-            onLoadData={handleLoadMoreData}
             my="2.5rem"
             mx="2rem"
           />
