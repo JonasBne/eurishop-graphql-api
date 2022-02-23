@@ -2,11 +2,11 @@ import React from 'react';
 import ProductList from './ProductList';
 import { render, screen, waitFor, within } from '../../tests/utils';
 import { server } from '../../mockServer';
-import { getAllProductsList, getAllProductsFailed } from '../../tests/fixtures/product';
+import { getAllProductsList, getAllProductsListFailed } from '../../tests/fixtures/product';
 
 describe('failed query', () => {
   test('renders a error modal', async () => {
-    server.use(getAllProductsFailed);
+    server.use(getAllProductsListFailed);
 
     render(<ProductList />);
 
