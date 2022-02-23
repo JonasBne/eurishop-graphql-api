@@ -13,10 +13,11 @@ import { BasketItem as CartItem } from '../../graphql/types';
 
 interface ShoppingCartProps {
   cartItems: CartItem[];
+  onRemove: (productId: number) => void;
   onClear: () => void;
 }
 
-function ShoppingCart({ cartItems, onClear }: ShoppingCartProps) {
+function ShoppingCart({ cartItems, onClear, onRemove }: ShoppingCartProps) {
   const theme = useContext(ThemeContext);
 
   const handleClear = () => {
@@ -40,7 +41,7 @@ function ShoppingCart({ cartItems, onClear }: ShoppingCartProps) {
         {cartItems.length > 0 ? (
           cartItems.map((item) => (
             <Box pl="1rem" key={item?.product?.id}>
-              <BasketItem item={item} data-test-id={item?.product?.id} />
+              <BasketItem item={item} data-test-id={item?.product?.id} onRemove={onRemove} />
               <hr />
             </Box>
           ))

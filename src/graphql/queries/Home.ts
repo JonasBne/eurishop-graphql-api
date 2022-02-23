@@ -54,3 +54,19 @@ export const CLEAR_BASKET = gql`
     }
   }
 `;
+
+export const REMOVE_ITEM_FROM_BASKET = gql`
+  mutation removeItemFromBasket($basket: RemoveItemFromBasketInput!) {
+    removeItemFromBasket(input: $basket) {
+      basket {
+        checkoutID
+        items {
+          product {
+            id
+            title
+          }
+        }
+      }
+    }
+  }
+`;

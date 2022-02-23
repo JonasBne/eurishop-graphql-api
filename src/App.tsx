@@ -14,11 +14,10 @@ import ProductAdd from './views/ProductDetail/ProductAdd';
 
 TODO
 
-- [ ] issue with mutation in Graphql playground?
+- [ ] issue with mutation in Graphql playground? Query works in code, but doesn't work in playground. Success feedback is given, but product is not removed.
 - [ ] provide mock for removeItemFromBasket in fixture 
 - [ ] add test case for removing item from basket
 - [ ] where to store queries?
-
 
 */
 

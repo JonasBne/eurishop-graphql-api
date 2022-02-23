@@ -366,6 +366,25 @@ export type Clear_BasketMutation = {
   } | null;
 };
 
+export type RemoveItemFromBasketMutationVariables = Exact<{
+  basket: RemoveItemFromBasketInput;
+}>;
+
+export type RemoveItemFromBasketMutation = {
+  __typename?: 'Mutation';
+  removeItemFromBasket?: {
+    __typename?: 'RemoveItemFromBasketPayload';
+    basket?: {
+      __typename?: 'Basket';
+      checkoutID?: string | null;
+      items?: Array<{
+        __typename?: 'BasketItem';
+        product?: { __typename?: 'Product'; id?: number | null; title?: string | null } | null;
+      } | null> | null;
+    } | null;
+  } | null;
+};
+
 export type GetAllProductsListQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetAllProductsListQuery = {
@@ -519,6 +538,30 @@ export type Clear_BasketMutationResult = Apollo.MutationResult<Clear_BasketMutat
 export type Clear_BasketMutationOptions = Apollo.BaseMutationOptions<
   Clear_BasketMutation,
   Clear_BasketMutationVariables
+>;
+export const RemoveItemFromBasketDocument = gql`
+  mutation removeItemFromBasket($basket: RemoveItemFromBasketInput!) {
+    removeItemFromBasket(input: $basket) {
+      basket {
+        checkoutID
+        items {
+          product {
+            id
+            title
+          }
+        }
+      }
+    }
+  }
+`;
+export type RemoveItemFromBasketMutationFn = Apollo.MutationFunction<
+  RemoveItemFromBasketMutation,
+  RemoveItemFromBasketMutationVariables
+>;
+export type RemoveItemFromBasketMutationResult = Apollo.MutationResult<RemoveItemFromBasketMutation>;
+export type RemoveItemFromBasketMutationOptions = Apollo.BaseMutationOptions<
+  RemoveItemFromBasketMutation,
+  RemoveItemFromBasketMutationVariables
 >;
 export const GetAllProductsListDocument = gql`
   query getAllProductsList {

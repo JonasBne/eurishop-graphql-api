@@ -7,8 +7,16 @@ import {
   AddItemToBasketMutationVariables,
   Clear_BasketMutation,
   BasketItem,
+  RemoveItemFromBasketMutation,
+  RemoveItemFromBasketMutationVariables,
 } from '../../graphql/types';
-import { GET_PRODUCTS, GET_BASKET, ADD_ITEM_TO_BASKET, CLEAR_BASKET } from '../../graphql/queries/Home';
+import {
+  GET_PRODUCTS,
+  GET_BASKET,
+  ADD_ITEM_TO_BASKET,
+  CLEAR_BASKET,
+  REMOVE_ITEM_FROM_BASKET,
+} from '../../graphql/queries/Home';
 import ErrorModal from '../../components/ErrorModal/ErrorModal';
 import FlexBox from '../../components/FlexBox';
 import LoadingSpinner from '../../components/LoadingSpinner';
@@ -48,9 +56,23 @@ function Home() {
     ],
   });
 
+  const [removeItem, { error: removeItemError, data: removedItemData }] = useMutation<
+    RemoveItemFromBasketMutation,
+    RemoveItemFromBasketMutationVariables
+  >(REMOVE_ITEM_FROM_BASKET, {
+    refetchQueries: [
+      {
+        query: GET_BASKET,
+      },
+    ],
+  });
+
   useEffect(() => {
     if (addedItemError) {
       failToast(addedItemError.message);
+    }
+    if (removeItemError) {
+      failToast(removeItemError.message);
     }
     if (clearBasketError) {
       failToast(clearBasketError.message);
@@ -58,7 +80,10 @@ function Home() {
     if (addedItemData?.addItemToBasket?.basket) {
       succesToast('Success!');
     }
-  }, [addedItemError, clearBasketError, addedItemData]);
+    if (removedItemData?.removeItemFromBasket?.basket) {
+      succesToast('Success!');
+    }
+  }, [addedItemError, removeItemError, clearBasketError, addedItemData, removedItemData]);
 
   const handleBuy = (productId: number) => {
     addItemToBasket({
@@ -69,6 +94,17 @@ function Home() {
             productId,
             quantity: 1,
           },
+        },
+      },
+    });
+  };
+
+  const handleRemoveItem = (productId: number) => {
+    removeItem({
+      variables: {
+        basket: {
+          checkoutID: 'XYZ',
+          productId,
         },
       },
     });
@@ -96,7 +132,7 @@ function Home() {
             ))}
           </FlexBox>
           <FlexBox order={2} flexBasis="25%" mt="2rem" height="fit-content">
-            <ShoppingCart cartItems={cartItems} onClear={handleClear} />
+            <ShoppingCart cartItems={cartItems} onClear={handleClear} onRemove={handleRemoveItem} />
           </FlexBox>
         </FlexBox>
       )}
