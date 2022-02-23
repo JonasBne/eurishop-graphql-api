@@ -7,6 +7,8 @@ import { BasketItem } from '../../graphql/types';
 
 const mockOnClear = jest.fn();
 
+// TODO: add test case for clicking on remove button
+
 describe('shopping cart', () => {
   let cartItems: BasketItem[];
   beforeEach(() => {
