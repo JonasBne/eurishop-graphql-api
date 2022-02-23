@@ -1,8 +1,8 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import Product from '../../domain/product';
 import ProductForm from './ProductForm';
 import { render, screen, waitFor } from '../../tests/utils';
+import { Product } from '../../graphql/types';
 
 const title = 'product form';
 
