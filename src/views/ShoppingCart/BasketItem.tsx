@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../../components/Header';
 import Box from '../../components/Box';
 import { calculateTotalCostPerCartItem } from '../../domain/shoppingCart';
+import Button from '../../components/Button';
 
 interface BasketItemProps {
   item: any;
@@ -16,9 +17,9 @@ function BasketItem({ item }: BasketItemProps) {
       </Header>
       <Box my="2rem" fontStyle="italic">{`Unit price: € ${item.product.price}`}</Box>
       <Box my="2rem" fontStyle="italic">{`Quantity: ${item.quantity}`}</Box>
-      <Box my="2rem" color="red" fontWeight="bold">
+      <Button variant="danger" mb="1rem">
         Remove
-      </Box>
+      </Button>
       <Box mt="0.5rem" mb="1rem" fontWeight="bold">
         {`Total: € ${calculateTotalCostPerCartItem(item)}`}
       </Box>
