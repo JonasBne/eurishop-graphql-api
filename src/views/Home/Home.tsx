@@ -6,6 +6,7 @@ import {
   AddItemToBasketMutation,
   AddItemToBasketMutationVariables,
   Clear_BasketMutation,
+  BasketItem,
 } from '../../graphql/types';
 import { GET_PRODUCTS, GET_BASKET, ADD_ITEM_TO_BASKET, CLEAR_BASKET } from '../../graphql/queries/Home';
 import ErrorModal from '../../components/ErrorModal/ErrorModal';
@@ -26,7 +27,7 @@ function Home() {
   const products = productsData?.allProducts?.product ?? [];
 
   const { loading: basketIsLoading, error: basketError, data: basketData } = useQuery<GetBasketQuery>(GET_BASKET);
-  const cartItems = basketData?.basket?.items ?? [];
+  const cartItems: BasketItem[] | any[] = basketData?.basket?.items ?? [];
 
   const [addItemToBasket, { error: addedItemError, data: addedItemData }] = useMutation<
     AddItemToBasketMutation,
