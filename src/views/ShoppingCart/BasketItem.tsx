@@ -16,6 +16,9 @@ function BasketItem({ item }: BasketItemProps) {
       </Header>
       <Box my="2rem" fontStyle="italic">{`Unit price: € ${item.product.price}`}</Box>
       <Box my="2rem" fontStyle="italic">{`Quantity: ${item.quantity}`}</Box>
+      <Box my="2rem" color="red" fontWeight="bold">
+        Remove
+      </Box>
       <Box mt="0.5rem" mb="1rem" fontWeight="bold">
         {`Total: € ${calculateTotalCostPerCartItem(item)}`}
       </Box>
