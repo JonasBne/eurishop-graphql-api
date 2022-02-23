@@ -2,11 +2,11 @@ import React from 'react';
 import ProductList from './ProductList';
 import { render, screen, waitFor, within } from '../../tests/utils';
 import { server } from '../../mockServer';
-import { getAllProducts, getAllProductsFailed } from '../../tests/fixtures/product';
+import { getAllProductsList, getAllProductsFailed } from '../../tests/fixtures/product';
 
 describe('failed query', () => {
   test('renders a error modal', async () => {
-    server.use(getAllProductsFailed(404));
+    server.use(getAllProductsFailed);
 
     render(<ProductList />);
 
@@ -17,7 +17,7 @@ describe('failed query', () => {
 
 describe('succesful query', () => {
   test('renders a loading spinner and table', async () => {
-    server.use(getAllProducts);
+    server.use(getAllProductsList);
 
     render(<ProductList />);
 
