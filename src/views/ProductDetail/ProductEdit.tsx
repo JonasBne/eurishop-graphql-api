@@ -7,6 +7,8 @@ import ErrorModal from '../../components/ErrorModal/ErrorModal';
 import ProductForm, { ProductFormValues } from './ProductForm';
 // import toasts from '../../components/toasts';
 
+// TODO: write query for a single product
+
 function ProductEdit() {
   // const { succesToast, failToast } = toasts();
   const navigate = useNavigate();
