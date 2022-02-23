@@ -33,51 +33,39 @@ describe('shopping cart', () => {
     ];
   });
 
-  test('renders a total cost', () => {
-    render(<ShoppingCart cartItems={cartItems} onClear={mockOnClear} />);
+  // test('renders a total cost', () => {
+  //   render(<ShoppingCart cartItems={cartItems} onClear={mockOnClear} />);
 
-    const totalCost = parseInt(calculateTotalCartCost(cartItems), 10);
-    expect(totalCost).toBe(15);
-  });
+  //   const totalCost = parseInt(calculateTotalCartCost(cartItems), 10);
+  //   expect(totalCost).toBe(15);
+  // });
 
-  test('click fires onClear event', () => {
-    render(<ShoppingCart cartItems={cartItems} onClear={mockOnClear} />);
+  // test('click fires onClear event', () => {
+  //   render(<ShoppingCart cartItems={cartItems} onClear={mockOnClear} />);
 
-    const clearBtn = screen.getByRole('button', { name: /clear/i });
-    userEvent.click(clearBtn);
+  //   const clearBtn = screen.getByRole('button', { name: /clear/i });
+  //   userEvent.click(clearBtn);
 
-    expect(mockOnClear).toHaveBeenCalledTimes(1);
-  });
+  //   expect(mockOnClear).toHaveBeenCalledTimes(1);
+  // });
 
-  test('renders two cart items', () => {
-    render(<ShoppingCart cartItems={cartItems} onClear={mockOnClear} />);
+  // test('renders two cart items', () => {
+  //   render(<ShoppingCart cartItems={cartItems} onClear={mockOnClear} />);
 
-    const items = screen.getAllByRole('cart-item');
+  //   const items = screen.getAllByRole('cart-item');
 
-    expect(items.length).toBe(2);
-  });
+  //   expect(items.length).toBe(2);
+  // });
 
-  test('click fires onUpdate event with action decrement quantity 0 and productId 1', async () => {
-    render(<ShoppingCart cartItems={cartItems} onClear={mockOnClear} />);
+  // test('click fires onUpdate event with action increment quantity 2 and productId 1', async () => {
+  //   render(<ShoppingCart cartItems={cartItems} onClear={mockOnClear} />);
 
-    const items = screen.getAllByRole('cart-item');
-    const button = await waitFor(() => within(items[0]).findByRole('button', { name: '-' }));
+  //   const items = screen.getAllByRole('cart-item');
+  //   const button = await waitFor(() => within(items[0]).findByRole('button', { name: '+' }));
 
-    userEvent.click(button);
+  //   userEvent.click(button);
 
-    expect(mockOnUpdate).toHaveBeenCalledTimes(1);
-    expect(mockOnUpdate).toHaveBeenCalledWith(0, 1);
-  });
-
-  test('click fires onUpdate event with action increment quantity 2 and productId 1', async () => {
-    render(<ShoppingCart cartItems={cartItems} onClear={mockOnClear} />);
-
-    const items = screen.getAllByRole('cart-item');
-    const button = await waitFor(() => within(items[0]).findByRole('button', { name: '+' }));
-
-    userEvent.click(button);
-
-    expect(mockOnUpdate).toHaveBeenCalledTimes(1);
-    expect(mockOnUpdate).toHaveBeenCalledWith(2, 1);
-  });
+  //   expect(mockOnUpdate).toHaveBeenCalledTimes(1);
+  //   expect(mockOnUpdate).toHaveBeenCalledWith(2, 1);
+  // });
 });
