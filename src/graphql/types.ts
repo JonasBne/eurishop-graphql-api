@@ -386,6 +386,45 @@ export type GetAllProductsListQuery = {
   } | null;
 };
 
+export type GetAllProductsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllProductsQuery = {
+  __typename?: 'Query';
+  allProducts?: {
+    __typename?: 'ProductConnection';
+    product?: Array<{
+      __typename?: 'Product';
+      id?: number | null;
+      sku?: string | null;
+      title?: string | null;
+      desc?: string | null;
+      image?: string | null;
+      stocked?: boolean | null;
+      basePrice?: number | null;
+      price?: number | null;
+    } | null> | null;
+  } | null;
+};
+
+export type GetSingleProductQueryVariables = Exact<{
+  productId?: InputMaybe<Scalars['Int']>;
+}>;
+
+export type GetSingleProductQuery = {
+  __typename?: 'Query';
+  product?: {
+    __typename?: 'Product';
+    id?: number | null;
+    sku?: string | null;
+    title?: string | null;
+    desc?: string | null;
+    image?: string | null;
+    stocked?: boolean | null;
+    basePrice?: number | null;
+    price?: number | null;
+  } | null;
+};
+
 export type Remove_ProductMutationVariables = Exact<{
   id: Scalars['Int'];
 }>;
@@ -501,6 +540,38 @@ export type GetAllProductsListQueryResult = Apollo.QueryResult<
   GetAllProductsListQuery,
   GetAllProductsListQueryVariables
 >;
+export const GetAllProductsDocument = gql`
+  query getAllProducts {
+    allProducts {
+      product {
+        id
+        sku
+        title
+        desc
+        image
+        stocked
+        basePrice
+        price
+      }
+    }
+  }
+`;
+export type GetAllProductsQueryResult = Apollo.QueryResult<GetAllProductsQuery, GetAllProductsQueryVariables>;
+export const GetSingleProductDocument = gql`
+  query getSingleProduct($productId: Int) {
+    product(id: $productId) {
+      id
+      sku
+      title
+      desc
+      image
+      stocked
+      basePrice
+      price
+    }
+  }
+`;
+export type GetSingleProductQueryResult = Apollo.QueryResult<GetSingleProductQuery, GetSingleProductQueryVariables>;
 export const Remove_ProductDocument = gql`
   mutation REMOVE_PRODUCT($id: Int!) {
     deleteProduct(id: $id) {
