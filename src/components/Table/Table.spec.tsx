@@ -1,8 +1,8 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import Product from '../../domain/product';
 import Table from './Table';
 import { render, screen, within } from '../../tests/utils';
+import { Product } from '../../graphql/types';
 
 describe('product list', () => {
   let sortExpression: string;
@@ -93,7 +93,6 @@ describe('product list', () => {
       },
     ];
     mockSetSortExpression = jest.fn();
-    mockOnLoad = jest.fn();
     mockOnRowClick = jest.fn();
     mockOnActionClick = jest.fn();
   });
@@ -103,7 +102,6 @@ describe('product list', () => {
       <Table
         data={products}
         columns={columns}
-        onLoadData={mockOnLoad}
         onRowClick={mockOnRowClick}
         onActionClick={mockOnActionClick}
         sortExpression={sortExpression}
@@ -122,7 +120,6 @@ describe('product list', () => {
       <Table
         data={products}
         columns={columns}
-        onLoadData={mockOnLoad}
         onRowClick={mockOnRowClick}
         onActionClick={mockOnActionClick}
         sortExpression={sortExpression}
@@ -141,7 +138,6 @@ describe('product list', () => {
       <Table
         data={products}
         columns={columns}
-        onLoadData={mockOnLoad}
         onRowClick={mockOnRowClick}
         onActionClick={mockOnActionClick}
         sortExpression={sortExpression}
@@ -158,7 +154,6 @@ describe('product list', () => {
       <Table
         data={products}
         columns={columns}
-        onLoadData={mockOnLoad}
         onRowClick={mockOnRowClick}
         onActionClick={mockOnActionClick}
         sortExpression={sortExpression}
@@ -176,7 +171,6 @@ describe('product list', () => {
       <Table
         data={products}
         columns={columns}
-        onLoadData={mockOnLoad}
         onRowClick={mockOnRowClick}
         onActionClick={mockOnActionClick}
         sortExpression={sortExpression}
@@ -194,7 +188,6 @@ describe('product list', () => {
       <Table
         data={products}
         columns={columns}
-        onLoadData={mockOnLoad}
         onRowClick={mockOnRowClick}
         onActionClick={mockOnActionClick}
         sortExpression={sortExpression}
