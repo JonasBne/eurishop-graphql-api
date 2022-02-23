@@ -3,12 +3,12 @@ import React from 'react';
 import Home from './Home';
 import { render, screen } from '../../tests/utils';
 import { server } from '../../mockServer';
-import { getAllProducts, getAllProductsFailed, getSingleProduct } from '../../tests/fixtures/product';
+import { getAllProductsHome, getAllProductsHomeFailed, getSingleProduct } from '../../tests/fixtures/product';
 import { getBasket, getBasketFailed } from '../../tests/fixtures/basket';
 
 describe('failed query', () => {
   test('renders a error modal', async () => {
-    server.use(getAllProductsFailed(404));
+    server.use(getAllProductsHomeFailed);
     server.use(getBasketFailed(404));
 
     render(<Home />);
@@ -20,7 +20,7 @@ describe('failed query', () => {
 
 describe('succesful query', () => {
   test('renders a loading spinner, product cards and basket', async () => {
-    server.use(getAllProducts);
+    server.use(getAllProductsHome);
     server.use(getSingleProduct);
     server.use(getBasket);
 

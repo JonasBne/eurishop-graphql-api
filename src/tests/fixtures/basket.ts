@@ -1,14 +1,13 @@
-import { rest } from 'msw';
-import config from '../../config';
+import { graphql } from 'msw';
 
 //
 // GET REQUESTS
 //
 
-export const getBasket = rest.get(config.serverUrl, (req, res, ctx) =>
+export const getBasket = graphql.query('getBasket', (req, res, ctx) =>
   res(
     ctx.status(200),
-    ctx.json([
+    ctx.data([
       {
         id: 1,
         productId: 1,
@@ -28,28 +27,41 @@ export const getBasket = rest.get(config.serverUrl, (req, res, ctx) =>
   ),
 );
 
-export const getBasketFailed = (errorCode = 404) =>
-  rest.get(config.serverUrl, (req, res, ctx) => res(ctx.status(errorCode)));
-
-//
-// POST REQUESTS
-//
-
-export const postItemToBasket = rest.post(config.serverUrl, (req, res, ctx) =>
+export const getBasketFailed = graphql.query('getBasket', (req, res, ctx) =>
   res(
-    ctx.status(201),
-    ctx.json([
+    ctx.errors([
       {
-        id: 1,
-        productId: 1,
-        quantity: 1,
+        message: 'Failed to load basket',
       },
     ]),
   ),
 );
 
-export const postItemToBasketFailed = (errorCode = 404) =>
-  rest.post(config.serverUrl, (req, res, ctx) => res(ctx.status(errorCode)));
+//
+// POST REQUESTS
+//
+
+export const postItemToBasket = graphql.mutation('addItemToBasket', (req, res, ctx) =>
+  res(
+    ctx.data({
+      product: {
+        id: 1,
+        productId: 1,
+        quantity: 1,
+      },
+    }),
+  ),
+);
+
+export const postItemToBasketFailed = graphql.mutation('addItemToBasket', (req, res, ctx) =>
+  res(
+    ctx.errors([
+      {
+        message: 'Failed to post item',
+      },
+    ]),
+  ),
+);
 
 //
 // DELETE REQUESTS
