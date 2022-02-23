@@ -9,10 +9,10 @@ import Button from '../../components/Button';
 import BasketItem from './BasketItem';
 import { calculateTotalCartCost } from '../../domain/shoppingCart';
 import FaIcon from '../../assets/FaIcon';
+import { BasketItem as CartItem } from '../../graphql/types';
 
-// TODO: replace any[] with proper type
 interface ShoppingCartProps {
-  cartItems: any[];
+  cartItems: CartItem[];
   onClear: () => void;
 }
 
@@ -39,8 +39,8 @@ function ShoppingCart({ cartItems, onClear }: ShoppingCartProps) {
       <div>
         {cartItems.length > 0 ? (
           cartItems.map((item) => (
-            <Box pl="1rem" key={item.product.id}>
-              <BasketItem item={item} data-test-id={item.product.id} />
+            <Box pl="1rem" key={item?.product?.id}>
+              <BasketItem item={item} data-test-id={item?.product?.id} />
               <hr />
             </Box>
           ))
