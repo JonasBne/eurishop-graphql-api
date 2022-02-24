@@ -10,16 +10,6 @@ import ProductList from './views/ProductList/ProductList';
 import GlobalStyle from './theme/globalStyle';
 import ProductAdd from './views/ProductDetail/ProductAdd';
 
-/*
-
-TODO
-
-- [ ] provide mock for removeItemFromBasket in fixture 
-- [ ] add test case for removing item from basket
-- [ ] where to store queries?
-
-*/
-
 function App() {
   return (
     <ThemeProvider theme={theme}>

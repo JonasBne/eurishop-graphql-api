@@ -8,7 +8,6 @@ import Button from '../../components/Button';
 import FaIcon from '../../assets/FaIcon';
 import { Product } from '../../graphql/types';
 
-// TODO: is it ok to use the type coming from codegen?
 interface ProductCardProps extends SpaceProps {
   product: Product | null;
   onBuy: (productId: number) => void;
