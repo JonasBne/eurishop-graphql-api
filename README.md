@@ -61,7 +61,7 @@ See the section about https://facebook.github.io/create-react-app/docs/deploymen
 - Routing: [React Router](https://reactrouter.com/)
 - Feedback: [React-hot-toast](https://react-hot-toast.com/)
 - API:
-  - [react-query](https://react-query.tanstack.com/)
+  - [Apollo Client](https://www.apollographql.com/docs/react/)
 - Dev Server: [Webpack](https://webpack.js.org/)
 
 ## Tech Stack
@@ -70,7 +70,7 @@ See the section about https://facebook.github.io/create-react-app/docs/deploymen
 - [x] Yarn Scripts: start, build, lint, test
 - [x] ES linting with ESLint and [AirBnb Style Guide](https://github.com/airbnb/javascript)
 - [x] Jest with babel-jest & React-testing-library
-- [x] React-query setup & Sample
+- [x] Apollo Client setup & Sample
 
 ## Features
 
