@@ -5,9 +5,8 @@ import { calculateTotalCartCost } from '../../domain/shoppingCart';
 import { render, screen } from '../../tests/utils';
 import { BasketItem } from '../../graphql/types';
 
+const mockOnRemove = jest.fn();
 const mockOnClear = jest.fn();
-
-// TODO: add test case for clicking on remove button
 
 describe('shopping cart', () => {
   let cartItems: BasketItem[];
@@ -35,14 +34,14 @@ describe('shopping cart', () => {
   });
 
   test('renders a total cost', () => {
-    render(<ShoppingCart cartItems={cartItems} onClear={mockOnClear} />);
+    render(<ShoppingCart cartItems={cartItems} onClear={mockOnClear} onRemove={mockOnRemove} />);
 
     const totalCost = parseInt(calculateTotalCartCost(cartItems), 10);
     expect(totalCost).toBe(15);
   });
 
   test('click fires onClear event', () => {
-    render(<ShoppingCart cartItems={cartItems} onClear={mockOnClear} />);
+    render(<ShoppingCart cartItems={cartItems} onClear={mockOnClear} onRemove={mockOnRemove} />);
 
     const clearBtn = screen.getByRole('button', { name: /clear/i });
     userEvent.click(clearBtn);
@@ -51,10 +50,22 @@ describe('shopping cart', () => {
   });
 
   test('renders two cart items', () => {
-    render(<ShoppingCart cartItems={cartItems} onClear={mockOnClear} />);
+    render(<ShoppingCart cartItems={cartItems} onClear={mockOnClear} onRemove={mockOnRemove} />);
 
     const items = screen.getAllByRole('cart-item');
 
     expect(items.length).toBe(2);
+  });
+
+  test('removes one cart item', async () => {
+    render(<ShoppingCart cartItems={cartItems} onClear={mockOnClear} onRemove={mockOnRemove} />);
+
+    const removeButtons = await screen.findAllByText(/remove/i);
+    const removeButtonProduct2 = removeButtons[1];
+
+    userEvent.click(removeButtonProduct2);
+
+    expect(mockOnRemove).toHaveBeenCalledTimes(1);
+    expect(mockOnRemove.mock.calls[0][0]).toBe(2);
   });
 });
