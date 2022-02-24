@@ -15,7 +15,7 @@ describe('calculate total shopping cart cost', () => {
       { id: '1', product: { price: 10.0 }, quantity: 2 },
       { id: '2', product: { price: 10 }, quantity: 4 },
     ] as BasketItem[];
-    const result = parseInt(calculateTotalCartCost(cartItems), 10);
-    expect(result).toBe(60);
+    const result = calculateTotalCartCost(cartItems);
+    expect(Number(result)).toBe(60);
   });
 });
