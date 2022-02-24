@@ -36,8 +36,8 @@ describe('shopping cart', () => {
   test('renders a total cost', () => {
     render(<ShoppingCart cartItems={cartItems} onClear={mockOnClear} onRemove={mockOnRemove} />);
 
-    const totalCost = parseInt(calculateTotalCartCost(cartItems), 10);
-    expect(totalCost).toBe(15);
+    const totalCost = calculateTotalCartCost(cartItems);
+    expect(Number(totalCost)).toBe(15);
   });
 
   test('click fires onClear event', () => {
