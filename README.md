@@ -4,7 +4,7 @@
 
 I developed this application during my onboarding at Euricom. The main goal of doing so, was to familiarze myself with different tools, techniques and programming concepts in order to deliver a fully operational CRUD application. A lot of attention was spent towards clean code.
 
-Data is fictional and fetched from https://euricom-test-api.herokuapp.com/.
+Data is fictional and fetched from https://euricom-test-api.herokuapp.com/graphql.
 
 ## Getting Started
 
@@ -75,6 +75,7 @@ See the section about https://facebook.github.io/create-react-app/docs/deploymen
 ## Features
 
 - [x] Main layout and navigation
+- [x] Data fetching and manipulation based on GraphQL
 - [x] Product list (including sorting)
 - [x] Product actions (new, edit existing, details, remove)
 - [x] New product form
