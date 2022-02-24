@@ -126,9 +126,11 @@ function Home() {
               <ProductCard key={product?.id} product={product} onBuy={handleBuy} m="4rem 3rem" />
             ))}
           </FlexBox>
-          <FlexBox order={2} flexBasis="25%" mt="2rem" height="fit-content">
-            <ShoppingCart cartItems={cartItems} onClear={handleClear} onRemove={handleRemoveItem} />
-          </FlexBox>
+          {!productsIsLoading && (
+            <FlexBox order={2} flexBasis="25%" mt="2rem" height="fit-content">
+              <ShoppingCart cartItems={cartItems} onClear={handleClear} onRemove={handleRemoveItem} />
+            </FlexBox>
+          )}
         </FlexBox>
       )}
     </>
