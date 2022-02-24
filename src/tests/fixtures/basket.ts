@@ -22,7 +22,7 @@ export const getBasket = graphql.query('getBasket', (req, res, ctx) =>
           {
             product: {
               id: 2,
-              title: 'product2',
+              title: 'product',
               productId: 1,
               price: 10.0,
             },
@@ -97,11 +97,14 @@ export const clearBasket = graphql.mutation('clearBasket', (req, res, ctx) => re
 export const clearBasketFailed = (errorCode = 404) =>
   graphql.mutation('clearBasket', (req, res, ctx) =>
     res(
-      ctx.errors([
-        {
-          error: errorCode,
-          message: `Failed to clear basket with errorcode ${errorCode}`,
+      ctx.data({
+        error: {
+          errors: [
+            {
+              message: `Failed to load clear basket with errorcode ${errorCode}`,
+            },
+          ],
         },
-      ]),
+      }),
     ),
   );

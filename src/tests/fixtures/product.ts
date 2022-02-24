@@ -78,4 +78,13 @@ export const getAllProductsEmpty = graphql.query('getAllProducts', (req, res, ct
 
 export const getAllProductsListFailed = graphql.query('getAllProductsList', (req, res, ctx) => res(ctx.status(404)));
 
-export const getAllProductsHomeFailed = graphql.query('getAllProductsHome', (req, res, ctx) => res(ctx.status(404)));
+export const getAllProductsHomeFailed = (errorCode = 404) =>
+  graphql.query('getAllProductsHome', (req, res, ctx) =>
+    res(
+      ctx.errors([
+        {
+          message: `Failed to load products on homepage with errorcode ${errorCode}`,
+        },
+      ]),
+    ),
+  );

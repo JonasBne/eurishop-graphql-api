@@ -116,14 +116,9 @@ function Home() {
 
   return (
     <>
-      {productsIsLoading && !productsError && <LoadingSpinner />}
-      {(!productsIsLoading && !basketIsLoading && productsError) ||
-        (basketError && (
-          <ErrorModal
-            name={productsError?.name || basketError?.name}
-            message={productsError?.message || basketError?.message}
-          />
-        ))}
+      {(productsIsLoading || basketIsLoading) && <LoadingSpinner />}
+      {productsError && <ErrorModal name={productsError.name} message={productsError.message} />}
+      {basketError && <ErrorModal name={basketError.name} message={basketError.message} />}
       {products && (
         <FlexBox>
           <FlexBox flexWrap="wrap" justifyContent="start" flexDirection="row" order={1} flexBasis="75%">
