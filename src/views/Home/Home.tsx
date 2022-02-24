@@ -116,7 +116,7 @@ function Home() {
 
   return (
     <>
-      {productsIsLoading || (basketIsLoading && !productsError && !basketError && <LoadingSpinner />)}
+      {productsIsLoading && !productsError && <LoadingSpinner />}
       {(!productsIsLoading && !basketIsLoading && productsError) ||
         (basketError && (
           <ErrorModal

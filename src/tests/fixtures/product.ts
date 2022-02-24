@@ -46,15 +46,7 @@ export const getSingleProduct = graphql.query('getSingleProduct', (req, res, ctx
   );
 });
 
-export const getSingleProductFailed = graphql.query('getSingleProduct', (req, res, ctx) =>
-  res(
-    ctx.errors([
-      {
-        message: 'Failed to load product',
-      },
-    ]),
-  ),
-);
+export const getSingleProductFailed = graphql.query('getSingleProduct', (req, res, ctx) => res(ctx.status(404)));
 
 export const getAllProductsHome = graphql.query('getAllProductsHome', (req, res, ctx) =>
   res(
@@ -84,22 +76,6 @@ export const getAllProductsEmpty = graphql.query('getAllProducts', (req, res, ct
   ),
 );
 
-export const getAllProductsListFailed = graphql.query('getAllProductsList', (req, res, ctx) =>
-  res(
-    ctx.errors([
-      {
-        message: 'Failed to load products',
-      },
-    ]),
-  ),
-);
+export const getAllProductsListFailed = graphql.query('getAllProductsList', (req, res, ctx) => res(ctx.status(404)));
 
-export const getAllProductsHomeFailed = graphql.query('getAllProductsHome', (req, res, ctx) =>
-  res(
-    ctx.errors([
-      {
-        message: 'Failed to load products',
-      },
-    ]),
-  ),
-);
+export const getAllProductsHomeFailed = graphql.query('getAllProductsHome', (req, res, ctx) => res(ctx.status(404)));
