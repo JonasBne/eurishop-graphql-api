@@ -39,7 +39,6 @@ export const getBasketFailed = (errorCode = 404) =>
     res(
       ctx.errors([
         {
-          code: errorCode,
           message: `Failed to load basket with errorcode ${errorCode}`,
         },
       ]),
@@ -67,7 +66,6 @@ export const postItemToBasketFailed = (errorCode = 400) =>
     res(
       ctx.errors([
         {
-          code: errorCode,
           message: `Failed to add item to basket with errorcode ${errorCode}`,
         },
       ]),
@@ -85,7 +83,6 @@ export const removeItemFromBasketFailed = (errorCode = 404) =>
     res(
       ctx.errors([
         {
-          error: errorCode,
           message: `Failed to remove item from basket with errorcode ${errorCode}`,
         },
       ]),
@@ -97,14 +94,10 @@ export const clearBasket = graphql.mutation('clearBasket', (req, res, ctx) => re
 export const clearBasketFailed = (errorCode = 404) =>
   graphql.mutation('clearBasket', (req, res, ctx) =>
     res(
-      ctx.data({
-        error: {
-          errors: [
-            {
-              message: `Failed to load clear basket with errorcode ${errorCode}`,
-            },
-          ],
+      ctx.errors([
+        {
+          message: `Failed to clear basket with errorcode ${errorCode}`,
         },
-      }),
+      ]),
     ),
   );

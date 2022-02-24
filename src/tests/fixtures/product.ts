@@ -46,7 +46,16 @@ export const getSingleProduct = graphql.query('getSingleProduct', (req, res, ctx
   );
 });
 
-export const getSingleProductFailed = graphql.query('getSingleProduct', (req, res, ctx) => res(ctx.status(404)));
+export const getSingleProductFailed = (errorCode = 404) =>
+  graphql.query('getSingleProduct', (req, res, ctx) =>
+    res(
+      ctx.errors([
+        {
+          message: `Failed to load single product with errorcode ${errorCode}`,
+        },
+      ]),
+    ),
+  );
 
 export const getAllProductsHome = graphql.query('getAllProductsHome', (req, res, ctx) =>
   res(
