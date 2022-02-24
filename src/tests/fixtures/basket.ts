@@ -67,31 +67,12 @@ export const postItemToBasketFailed = graphql.mutation('addItemToBasket', (req, 
 // DELETE REQUESTS
 //
 
-export const removeItemFromBasket = rest.delete(config.serverUrl, (req, res, ctx) => res(ctx.json([])));
+export const removeItemFromBasket = graphql.mutation('removeItemFromBasket', (req, res, ctx) => res(ctx.status(200)));
 
-export const removeItemFromBasketFailed = (errorCode = 404) =>
-  rest.delete(config.serverUrl, (req, res, ctx) => res(ctx.status(errorCode)));
-
-export const clearBasket = rest.delete(config.serverUrl, (req, res, ctx) => res(ctx.json([])));
-
-export const clearBasketFailed = (errorCode = 404) =>
-  rest.delete(config.serverUrl, (req, res, ctx) => res(ctx.status(errorCode)));
-
-//
-// PATCH REQUESTS
-//
-
-export const patchBasket = rest.patch(config.serverUrl, (req, res, ctx) =>
-  res(
-    ctx.json([
-      {
-        id: 1,
-        productId: 1,
-        quantity: 2,
-      },
-    ]),
-  ),
+export const removeItemFromBasketFailed = graphql.mutation('removeItemFromBasket', (req, res, ctx) =>
+  res(ctx.status(404)),
 );
 
-export const patchBasketFailed = (errorCode = 404) =>
-  rest.patch(config.serverUrl, (req, res, ctx) => res(ctx.status(errorCode)));
+export const clearBasket = graphql.mutation('clearBasket', (req, res, ctx) => res(ctx.status(200)));
+
+export const clearBasketFailed = graphql.mutation('clearBasket', (req, res, ctx) => res(ctx.status(404)));
